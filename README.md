@@ -1,3 +1,3 @@
 # thundersense board demo for MDK.
 
-Blink demo.
+VCOM demo.

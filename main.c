@@ -7,6 +7,8 @@
 #include "em_cmu.h"
 #include "em_emu.h"
 
+#include "retargetserial.h"
+
 #include "bspconfig.h"
 
 #include "board.h"
@@ -31,6 +33,10 @@ int main(void)
   CMU_ClockSelectSet(cmuClock_HF, cmuSelect_HFXO);
   CMU_OscillatorEnable(cmuOsc_HFRCO, false, false);
 
+/* Initialize LEUART/USART and map LF to CRLF */
+	RETARGET_SerialInit();
+	RETARGET_SerialCrLf(1);
+	
   /* Setup SysTick Timer for 1 msec interrupts  */
   UTIL_init();
   BOARD_init(); 
@@ -38,6 +44,8 @@ int main(void)
   ledMask = 1;
   BOARD_ledSet(ledMask);
 
+	printf("VCOM of EFR32MG1P132 %u Hz\n", SystemCoreClock);
+	
   /* Infinite blink loop */
   while (1)
   {
