@@ -43,7 +43,7 @@
  * @brief Local variables used in the utility functions
  ******************************************************************************/
 /* Local variables */
-volatile uint32_t msTickCount;       /**< Counts 1ms time ticks               */
+volatile uint32_t g_Ticks;       /**< Counts 1ms time ticks               */
 /** @} */
 
 /***************************************************************************//**
@@ -51,6 +51,10 @@ volatile uint32_t msTickCount;       /**< Counts 1ms time ticks               */
  * @{
  * @brief Utility functions
  ******************************************************************************/
+uint32_t HAL_GetTick(void)
+{
+	return g_Ticks;
+}
 
 /***************************************************************************//**
  * @brief
@@ -67,7 +71,7 @@ uint32_t UTIL_init( void )
    uint32_t ticks;
 
    /* Setup SysTick Timer for 1 msec interrupts  */
-   ticks = CMU_ClockFreqGet( cmuClock_CORE ) / 1000;
+   ticks = CMU_ClockFreqGet( cmuClock_CORE ) / HZ;
    stat = SysTick_Config( ticks );
 
    return stat;
@@ -83,8 +87,7 @@ uint32_t UTIL_init( void )
  ******************************************************************************/
 void SysTick_Handler( void )
 {
-
-   msTickCount++;
+   g_Ticks++;
 
    return;
 
@@ -105,8 +108,8 @@ void UTIL_delay( uint32_t ms )
 
    uint32_t curTicks;
 
-   curTicks = msTickCount;
-   while( ( msTickCount - curTicks ) < ms ) {
+   curTicks = g_Ticks;
+   while( ( g_Ticks - curTicks ) < ms ) {
       EMU_EnterEM1();
    }
 

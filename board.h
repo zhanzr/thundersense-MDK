@@ -43,6 +43,8 @@
 #include "board_pic_regs.h"
 #include "board_rgbled_profiles.h"
 
+#define	HZ	1000
+
 /***************************************************************************//**
  * @defgroup BOARD_Error_Messages BOARD module error codes
  * @{

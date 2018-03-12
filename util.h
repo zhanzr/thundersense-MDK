@@ -64,6 +64,8 @@ void     UTIL_supplyProbe                ( void );
 void     UTIL_supplyGetCharacteristics   ( uint8_t *type, float *voltage, float *ir );
 uint8_t  UTIL_supplyGetType              ( void );
 bool     UTIL_isLowPower                 ( void );
+
+uint32_t HAL_GetTick(void);
 /** @} */
 
 /** @} */
